@@ -1,0 +1,316 @@
+<!-- Mirror for root template serving -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RIZZAI — AI Pickup Line Generator</title>
+  <meta name="description" content="Generate funny, cute, clever and confident pickup lines in seconds with native Tanglish, English and Tamil support.">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <span class="logo-icon">⚡</span>
+        <span class="brand-name">RIZZ<span class="gradient-text">AI</span></span>
+        <span class="badge-pill">AI WINGMAN</span>
+      </div>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#hero" class="nav-link active">Home</a>
+        <a href="#generator" class="nav-link">Generator</a>
+        <a href="#favorites" class="nav-link">Favorites (<span id="favCount">0</span>)</a>
+        <a href="#history" class="nav-link">History</a>
+        <a href="#about" class="nav-link">About</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-primary btn-sm" onclick="scrollToGenerator()">Generate ✨</button>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="hero-section">
+      <div class="container hero-container">
+        <div class="hero-badge">
+          <span>🔥</span>
+          <span>NEXT-GEN CONVERSATION STARTER</span>
+        </div>
+        <h1 class="hero-title">
+          Your AI Wingman for <br><span class="gradient-text">Better Conversations.</span>
+        </h1>
+        <p class="hero-subtitle">
+          Generate funny, cute, clever and confident pickup lines in seconds. Speaks natural colloquial <strong>Tanglish</strong>, English, and Tamil.
+        </p>
+
+        <div class="hero-cta-group">
+          <button class="btn btn-primary btn-lg" onclick="scrollToGenerator()">Generate Now ✨</button>
+          <button class="btn btn-outline btn-lg" id="surpriseHeroBtn">🎲 Surprise Me</button>
+        </div>
+
+        <div class="quick-presets">
+          <div class="preset-label">Quick Presets:</div>
+          <div class="preset-pills">
+            <button class="pill" onclick="applyPreset('Funny', 'Chat')">😂 Make Me Laugh</button>
+            <button class="pill" onclick="applyPreset('Cute', 'Instagram DM')">🥰 Cute Line</button>
+            <button class="pill" onclick="applyPreset('Smooth', 'First time talking')">😎 Smooth Line</button>
+            <button class="pill" onclick="applyPreset('Flirty', 'Crush')">😉 Flirty Line</button>
+            <button class="pill" onclick="applyPreset('Clever', 'College')">🧠 Clever Line</button>
+            <button class="pill" onclick="applyPreset('Wholesome', 'Friend')">🌸 Wholesome Line</button>
+            <button class="pill" onclick="applyPreset('Confident', 'Dating app')">🔥 Confident Line</button>
+          </div>
+        </div>
+
+        <div class="hero-preview-card">
+          <div class="card-header">
+            <span class="style-badge style-funny">😂 TANGLISH RIZZ</span>
+            <span class="card-hint">Sample Output</span>
+          </div>
+          <p class="card-text">
+            “Un kitta pesanum nu nenachen... aana en brain already loading screen la stuck aayiduchu 😂”
+          </p>
+          <div class="card-footer">
+            <span class="card-meta">Style: Funny • Tone: Casual</span>
+            <div class="card-actions">
+              <button class="icon-btn" onclick="copyText('Un kitta pesanum nu nenachen... aana en brain already loading screen la stuck aayiduchu 😂')" title="Copy Line">📋</button>
+              <button class="icon-btn" onclick="shareLine('Un kitta pesanum nu nenachen... aana en brain already loading screen la stuck aayiduchu 😂')" title="Share Line">↗️</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="generator" class="generator-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Generate Pickup Lines 🔥</h2>
+          <p>Customize the scenario and tone to craft personalized rizz.</p>
+        </div>
+
+        <div class="generator-grid">
+          <div class="generator-form-card">
+            <form id="rizzForm">
+              <div class="form-group">
+                <label for="personName">Their Name <span class="text-muted">(Optional)</span></label>
+                <input type="text" id="personName" placeholder="Enter their name... (e.g. Rithanya)" autocomplete="off">
+              </div>
+
+              <div class="form-group">
+                <label for="situationSelect">Situation / Context</label>
+                <select id="situationSelect">
+                  <option value="First time talking" selected>First time talking</option>
+                  <option value="Instagram DM">Instagram DM</option>
+                  <option value="WhatsApp chat">WhatsApp chat</option>
+                  <option value="College">College</option>
+                  <option value="Friend">Friend</option>
+                  <option value="Crush">Crush</option>
+                  <option value="Dating app">Dating app</option>
+                  <option value="Birthday">Birthday</option>
+                  <option value="Compliment">Compliment</option>
+                  <option value="Funny conversation">Funny conversation</option>
+                  <option value="Random">Random</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+
+              <div class="form-group" id="customSituationGroup" style="display: none;">
+                <label for="customSituation">Describe Custom Context</label>
+                <input type="text" id="customSituation" placeholder="e.g. Gym workout, library study session">
+              </div>
+
+              <div class="form-group">
+                <div class="flex-between">
+                  <label>Language</label>
+                  <span class="badge-tanglish">Tanglish Recommended 🔥</span>
+                </div>
+                <div class="chip-group" id="languageGroup">
+                  <button type="button" class="chip active" data-value="Tanglish">Tanglish</button>
+                  <button type="button" class="chip" data-value="English">English</button>
+                  <button type="button" class="chip" data-value="Tamil">Tamil</button>
+                  <button type="button" class="chip" data-value="Tamil + English">Tamil + English</button>
+                  <button type="button" class="chip" data-value="Malayalam">Malayalam</button>
+                  <button type="button" class="chip" data-value="Hindi">Hindi</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Style / Mood</label>
+                <div class="chip-group" id="styleGroup">
+                  <button type="button" class="chip active" data-value="Funny">Funny 😂</button>
+                  <button type="button" class="chip" data-value="Cute">Cute 🥰</button>
+                  <button type="button" class="chip" data-value="Romantic">Romantic ❤️</button>
+                  <button type="button" class="chip" data-value="Clever">Clever 🧠</button>
+                  <button type="button" class="chip" data-value="Confident">Confident 😎</button>
+                  <button type="button" class="chip" data-value="Flirty">Flirty 😉</button>
+                  <button type="button" class="chip" data-value="Smooth">Smooth ✨</button>
+                  <button type="button" class="chip" data-value="Sarcastic">Sarcastic 😏</button>
+                  <button type="button" class="chip" data-value="Nerdy">Nerdy 🤓</button>
+                  <button type="button" class="chip" data-value="Short & Simple">Short & Simple ⚡</button>
+                  <button type="button" class="chip" data-value="Wholesome">Wholesome 🌸</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Confidence Level</label>
+                <div class="chip-group grid-4" id="confidenceGroup">
+                  <button type="button" class="chip" data-value="Shy">Shy</button>
+                  <button type="button" class="chip active" data-value="Casual">Casual</button>
+                  <button type="button" class="chip" data-value="Confident">Confident</button>
+                  <button type="button" class="chip" data-value="Bold">Bold</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="flex-between">
+                  <label>Number of Lines</label>
+                  <div class="chip-group count-group" id="countGroup">
+                    <button type="button" class="chip" data-value="3">3</button>
+                    <button type="button" class="chip active" data-value="5">5</button>
+                    <button type="button" class="chip" data-value="10">10</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-block" id="generateBtn">
+                  <span>Generate Rizz 🔥</span>
+                </button>
+                <button type="button" class="btn btn-outline" id="surpriseMeBtn" title="Randomize options and generate">
+                  🎲 Surprise Me
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="generator-results-card">
+            <div class="results-header">
+              <h3>Generated Results</h3>
+              <span id="resultsCountBadge" class="results-count">0 Lines</span>
+            </div>
+
+            <div id="loadingState" class="loading-state" style="display: none;">
+              <div class="pulsing-flame">🔥</div>
+              <h4>Cooking up some rizz... 🔥</h4>
+              <p>Crafting witty & respectful lines for you</p>
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+            </div>
+
+            <div id="emptyState" class="empty-state">
+              <div class="empty-icon">✨</div>
+              <h4>Ready to generate?</h4>
+              <p>Configure your situation on the left and click <strong>Generate Rizz</strong> to begin!</p>
+            </div>
+
+            <div id="resultsList" class="results-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="favorites" class="vault-section">
+      <div class="container">
+        <div class="section-header flex-between">
+          <div>
+            <h2>Saved Favorites ❤️</h2>
+            <p>Your curated vault of top-tier pickup lines.</p>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="clearFavorites()">Clear All</button>
+        </div>
+
+        <div id="favoritesList" class="vault-grid"></div>
+
+        <div id="favoritesEmpty" class="empty-state" style="display: none;">
+          <div class="empty-icon">😅</div>
+          <h4>Your rizz collection is empty</h4>
+          <p>Save lines from the generator by clicking the heart button!</p>
+          <button class="btn btn-primary btn-sm" onclick="scrollToGenerator()">Generate Your First Line</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="history" class="vault-section">
+      <div class="container">
+        <div class="section-header flex-between">
+          <div>
+            <h2>Generation History 📜</h2>
+            <p>Timeline of lines generated during your session.</p>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="clearHistory()">Clear History</button>
+        </div>
+
+        <div id="historyList" class="vault-grid"></div>
+
+        <div id="historyEmpty" class="empty-state" style="display: none;">
+          <div class="empty-icon">📜</div>
+          <h4>No pickup lines yet</h4>
+          <p>Generated pickup lines will appear here automatically.</p>
+          <button class="btn btn-primary btn-sm" onclick="scrollToGenerator()">Start Generating</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>About RIZZAI 💡</h2>
+          <p>Your AI Wingman for Better Conversations</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-card">
+            <div class="about-icon">🧠</div>
+            <h3>What is RIZZAI?</h3>
+            <p>
+              RIZZAI uses artificial intelligence to create personalized, clever, and respectful pickup lines based on your specific situation, language, mood, and confidence level.
+            </p>
+          </div>
+
+          <div class="about-card">
+            <div class="about-icon">🔥</div>
+            <h3>Native Tanglish Support</h3>
+            <p>
+              Tanglish is not just English translated to Tamil—it's how modern youngsters actually text. RIZZAI captures natural spoken colloquial rhythms, humor, and movie-grade charm like <em>"Un smile paathale enakku WiFi full bars varudhu."</em>
+            </p>
+          </div>
+
+          <div class="about-card">
+            <div class="about-icon">🛡️</div>
+            <h3>Safety & Respect Pledge</h3>
+            <p>
+              We strictly uphold respectful social interactions. RIZZAI does NOT generate sexual, explicit, coercive, degrading, or offensive content. All lines are designed to break the ice playfully.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-brand">
+        <span class="logo-icon">⚡</span>
+        <span>RIZZAI</span>
+        <span class="footer-copy">— Built for fun, witty, and respectful conversations.</span>
+      </div>
+      <div class="footer-links">
+        <a href="#hero">Top ↑</a>
+        <a href="#generator">Generator</a>
+        <a href="#favorites">Favorites</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

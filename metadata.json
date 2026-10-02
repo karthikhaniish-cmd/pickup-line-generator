@@ -1,0 +1,7 @@
+{
+  "name": "RizzAI",
+  "description": "AI pickup line generator for playful, witty, cute, and smooth conversation starters in Tanglish, English, Tamil, and more.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
